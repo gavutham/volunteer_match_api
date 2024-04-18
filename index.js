@@ -1,1 +1,22 @@
-//OOOOOOOOOOOHHHHHHHHHHHHOOOOOOOOOOOOOOOOOOOOOOOOOO
+const express = require("express");
+const dotenv = require("dotenv");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const authRoute = require("./routes/auth");
+
+const app = express();
+
+dotenv.config();
+app.use(express.json());
+app.use(cors());
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(console.log("Succesfully Connected to database."))
+  .catch((err) => console.error(err));
+
+app.use("/auth/", authRoute);
+
+app.listen(process.env.PORT || 5000, () => {
+  console.log("Server is up");
+});
