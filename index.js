@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
+const eventRoute = require("./routes/event");
 
 const app = express();
 
@@ -18,6 +19,7 @@ mongoose
 
 app.use("/auth/", authRoute);
 app.use("/user/", userRoute);
+app.use("/event/", eventRoute);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("Server is up");
