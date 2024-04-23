@@ -5,7 +5,6 @@ const UserSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     email: {
       type: String,
@@ -22,7 +21,9 @@ const UserSchema = mongoose.Schema(
     },
     tags: {
       type: [String],
-      required: true,
+    },
+    events: {
+      type: [String],
     },
   },
   { timestamps: true }
