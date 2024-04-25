@@ -3,16 +3,22 @@ const User = require("../models/User");
 
 //Register
 router.post("/signup", async (req, res) => {
+  var user;
   try {
-    const newUser = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-      role: req.body.role,
-      tags: req.body.tags,
-    });
+    if (req.body.role === "Volunteer") {
+      const newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+        role: req.body.role,
+        points: 0,
+        requests: [],
+        tags: req.body.tags,
+      });
 
-    const user = await newUser.save();
+      user = await newUser.save();
+    }
+
     res.status(200).json(user);
   } catch (err) {
     res.status(500).json(err);

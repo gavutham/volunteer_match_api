@@ -15,12 +15,19 @@ const UserSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    role: {
-      type: String,
-      required: true,
+    points: {
+      type: Number,
+      default: 0,
+    },
+    requests: {
+      type: [String],
     },
     tags: {
       type: [String],
+    },
+    role: {
+      type: String,
+      required: true,
     },
     events: {
       type: [String],
