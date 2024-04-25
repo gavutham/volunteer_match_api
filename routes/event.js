@@ -29,4 +29,24 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/opt", async (req, res) => {
+  try {
+    const eventId = req.query.eventId;
+    const uId = req.query.uId;
+
+    if (eventId === undefined || uId === undefined) {
+      res.status(400).json({ message: "Invalid request query" });
+      return;
+    }
+
+    await Event.findByIdAndUpdate(eventId, {
+      $push: { opted: uId },
+    });
+
+    res.status(200).json({ message: "User Opted successfully" });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 module.exports = router;
