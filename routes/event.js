@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Event = require("../models/Event");
+const User = require("../models/User");
 
 router.get("/", async (req, res) => {
   try {
@@ -41,6 +42,10 @@ router.put("/opt", async (req, res) => {
 
     await Event.findByIdAndUpdate(eventId, {
       $push: { opted: uId },
+    });
+
+    await User.findByIdAndUpdate(uId, {
+      $pull: { requests: { $eq: eventId } },
     });
 
     res.status(200).json({ message: "User Opted successfully" });
