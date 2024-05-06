@@ -45,6 +45,7 @@ router.put("/opt", async (req, res) => {
     });
 
     await User.findByIdAndUpdate(uId, {
+      $push: { events: eventId },
       $pull: { requests: { $eq: eventId } },
     });
 
@@ -54,4 +55,27 @@ router.put("/opt", async (req, res) => {
   }
 });
 
+router.put("/unopt", async (req, res) => {
+  try {
+    const eventId = req.query.eventId;
+    const uId = req.query.uId;
+
+    if (eventId === undefined || uId === undefined) {
+      res.status(400).json({ message: "Invalid request query" });
+      return;
+    }
+
+    await Event.findByIdAndUpdate(eventId, {
+      $pull: { opted: { $eq: uId } },
+    });
+
+    await User.findByIdAndUpdate(uId, {
+      $pull: { events: { $eq: eventId } },
+    });
+
+    res.status(200).json({ message: "User Un-Opted successfully" });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 module.exports = router;
