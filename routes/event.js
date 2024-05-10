@@ -35,7 +35,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/update/:id", async (req, res) => {
   try {
     const updateEvent = await Event.findByIdAndUpdate(req.params.id, req.body);
     res.status(200).json(updateEvent);
@@ -65,6 +65,7 @@ router.put("/opt", async (req, res) => {
 
     res.status(200).json({ message: "User Opted successfully" });
   } catch (error) {
+    console.log(error);
     res.status(500).json(error);
   }
 });
