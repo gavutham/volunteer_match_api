@@ -108,4 +108,27 @@ router.post("/complete", async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+router.get("/leaderboard/alltime", async (req, res) => {
+  try {
+    const users = await User.find().sort({ points: -1 });
+    res.status(200).json(users.slice(0, 5));
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+router.get("/leaderboard/suggestion", async (req, res) => {
+  try {
+    const users = await User.aggregate([
+      { $match: { tags: { $in: req.body.tags } } },
+      { $sort: { points: -1 } },
+      { $limit: 5 },
+    ]).exec();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 module.exports = router;
