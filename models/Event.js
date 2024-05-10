@@ -38,6 +38,10 @@ const EventSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    completed: {
+      type: Boolean,
+      default: false,
+    }
   },
   { timestamps: true }
 );

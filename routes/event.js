@@ -92,4 +92,20 @@ router.put("/unopt", async (req, res) => {
     res.status(500).json(error);
   }
 });
+
+router.post("/complete", async (req, res) => {
+  try {
+    const { userIds, points, eventId } = req.body;
+
+    userIds.forEach(async (uid) => {
+      await User.findByIdAndUpdate(uid, { $inc: { points: points } });
+    });
+
+    await Event.findByIdAndUpdate(eventId, { completed: true });
+
+    res.status(200).json({ message: "Event completed successfully" });
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 module.exports = router;
