@@ -35,6 +35,15 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const updateEvent = await Event.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json(updateEvent);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.put("/opt", async (req, res) => {
   try {
     const eventId = req.query.eventId;
