@@ -119,7 +119,7 @@ router.get("/leaderboard/alltime", async (req, res) => {
   }
 });
 
-router.get("/leaderboard/suggestion", async (req, res) => {
+router.post("/leaderboard/suggestion", async (req, res) => {
   try {
     const users = await User.aggregate([
       { $match: { tags: { $in: req.body.tags } } },
