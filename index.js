@@ -21,6 +21,6 @@ app.use("/auth/", authRoute);
 app.use("/user/", userRoute);
 app.use("/event/", eventRoute);
 
-app.listen(process.env.PORT || 5000, () => {
+app.listen(process.env.PORT || 5010, () => {
   console.log("Server is up");
 });
