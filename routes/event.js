@@ -22,11 +22,19 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const newEvent = new Event(req.body);
+    const { requests, ...eventData } = req.body;
+
+    const newEvent = new Event(eventData);
     const event = await newEvent.save();
 
-    await User.findByIdAndUpdate(req.body.uid, {
+    await User.findByIdAndUpdate(eventData.uid, {
       $push: { events: event._id },
+    });
+
+    requests.forEach(async (uid) => {
+      await User.findByIdAndUpdate(uid, {
+        $push: { requests: event._id },
+      });
     });
 
     res.status(200).json(event);
